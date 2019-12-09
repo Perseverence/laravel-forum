@@ -15,10 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('discussions', 'DiscussionsController');
 
 Route::resource('discussions/{discussion}/replies', 'RepliesController');
+
+Route::get('users/notifications', [\App\Http\Controllers\UsersController::class, 'notifications'])->name('users.notifications');
+
+Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply', 'DiscussionsController@reply')->name('discussions.best-reply');
